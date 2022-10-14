@@ -1,0 +1,88 @@
+@use "sass:color";
+
+$color-primary: red;
+$color-tertiary: green;
+$color-secondary: blue;
+
+@function rem($text-size) {
+  $in-rem: calc($text-size / 16) + rem;
+  @return $in-rem;
+}
+
+@function percentage($index) {
+  $percentage: calc($index * 5%);
+  @return $percentage;
+}
+
+@mixin article-card($color, $border-color, $text-size: 16) {
+  color: $color;
+  padding: rem(25) rem(15);
+  text-align: center;
+  border: rem(1) solid $border-color;
+  font-size: rem($text-size);
+}
+
+.container {
+  border: rem(1) solid $color-primary;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: rem(15);
+  h1 {
+    color: $color-tertiary;
+    text-decoration: underline;
+    text-decoration-color: $color-secondary;
+    text-decoration-thickness: rem(1);
+    text-underline-offset: rem(6);
+    grid-column: 1/5;
+    justify-self: center;
+  }
+  h2 {
+    @extend h1;
+    text-decoration: none;
+    padding: rem(16);
+    border: rem(1) solid $color-primary;
+  }
+
+  article:nth-child(odd) {
+    @include article-card($color-primary, $color-tertiary);
+  }
+  article:nth-child(even) {
+    @include article-card($color-secondary, $color-tertiary);
+  }
+  article:last-child {
+    @include article-card($color-tertiary, $color-secondary, 24);
+    margin-top: rem(25);
+    grid-column: 1/5;
+  }
+}
+
+.number-container {
+  align-self: center;
+  grid-column: 1/5;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: rem(25);
+}
+
+@for $index from 1 through 3 {
+  .fs-#{$index}rem {
+    font-size: $index + rem;
+    width: rem(44);
+    height: rem(44);
+    border: rem(1) solid $color-primary;
+  }
+}
+@for $index from 1 through 19 {
+  @if $index == 10 {
+    .number-container:nth-child(#{$index}) {
+      background-color: $color-secondary;
+      color: $color-primary;
+    }
+  } @else {
+    .number-container:nth-child(#{$index}) {
+      background-color: color.change(white, $blackness: percentage($index));
+      color: color.change(black, $lightness: percentage($index));
+    }
+  }
+}
