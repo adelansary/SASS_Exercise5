@@ -63,6 +63,20 @@ $color-secondary: blue;
   flex-direction: row;
   justify-content: space-between;
   margin-top: rem(25);
+
+  @for $index from 1 through 19 {
+    @if $index == 10 {
+      div:nth-child(#{$index}) {
+        background-color: $color-secondary;
+        color: $color-primary;
+      }
+    } @else {
+      div:nth-child(#{$index}) {
+        background-color: color.change(white, $blackness: percentage($index));
+        color: color.change(black, $lightness: percentage($index));
+      }
+    }
+  }
 }
 
 @for $index from 1 through 3 {
@@ -71,18 +85,5 @@ $color-secondary: blue;
     width: rem(44);
     height: rem(44);
     border: rem(1) solid $color-primary;
-  }
-}
-@for $index from 1 through 19 {
-  @if $index == 10 {
-    .number-container:nth-child(#{$index}) {
-      background-color: $color-secondary;
-      color: $color-primary;
-    }
-  } @else {
-    .number-container:nth-child(#{$index}) {
-      background-color: color.change(white, $blackness: percentage($index));
-      color: color.change(black, $lightness: percentage($index));
-    }
   }
 }
